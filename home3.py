@@ -9,7 +9,11 @@ def get_birthdays_per_week(users):
 
     for user in users:
         name = user['name']
-        birthday = user['birthday'].date()
+        birthday = user['birthday'].date().replace(year=today.year)
+
+        if birthday.weekday() >= 5:  
+            birthday += timedelta(days=7 - birthday.weekday())
+
         days_until_birthday = (birthday - today).days
 
         birthday_weekday = (current_weekday + days_until_birthday) % 7
